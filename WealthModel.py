@@ -105,17 +105,18 @@ class WealthAgent(Agent):
         new_position = random.choice(possible_steps)
         self.model.grid.move_agent(self, new_position)
 
-    def give_money(self):
+    def give_money(self, coins):
         cellmates = self.model.grid.get_cell_list_contents([self.pos])
         if len(cellmates) > 1:
             other = random.choice(cellmates)
-            other.wealth += 2
-            self.wealth -= 1
+            other.wealth += coins
+            self.wealth -= coins
+            print(coins)
 
     def step(self):
         self.move()
         if self.wealth > 0:
-            self.give_money()
+            self.give_money(3)
             
 
             
