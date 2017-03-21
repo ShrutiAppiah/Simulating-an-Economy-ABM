@@ -10,14 +10,18 @@ def agent_portrayal(agent):
                  "Filled": "true",
                  "r": 0.5}
 
-    if agent.wealth > 4:
-        portrayal["Color"] = "blue"
+    if agent.wealth > 8:
+        portrayal["Color"] = "red"
         portrayal["Layer"] = 0
         portrayal["r"] = 0.6
+    elif agent.wealth > 4:
+        portrayal["Color"] = "blue"
+        portrayal["Layer"] = 0
+        portrayal["r"] = 0.4
     elif agent.wealth > 2:
         portrayal["Color"] = "green"
         portrayal["Layer"] = 0
-        portrayal["r"] = 0.4
+        portrayal["r"] = 0.3
     elif agent.wealth > 0:
         portrayal["Color"] = "grey"
         portrayal["Layer"] = 1

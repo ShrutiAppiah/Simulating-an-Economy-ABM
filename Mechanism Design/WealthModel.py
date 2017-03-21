@@ -1,9 +1,11 @@
 import random
+import math
 
 from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
+#from random import randint
 
 
 def compute_gini(model):
@@ -42,8 +44,12 @@ class WealthModel(Model):
     def run_model(self, n):
         for i in range(n):
             self.step()
-
-
+            print("step = ", step())
+            """tax_period = step()%10
+            if tax_period == 0
+                return_tax(self, treasury)"""
+           
+        
 class WealthAgent(Agent):
     """ An agent with fixed initial wealth."""
     def __init__(self, unique_id, model):
@@ -63,8 +69,43 @@ class WealthAgent(Agent):
             other = random.choice(cellmates)
             other.wealth += coins
             self.wealth -= coins
+            
+    def donate_money(self):
+        cellmates = self.model.grid.get_cell_list_contents([self.pos])
+        #print("cellmates = ", cellmates)
+        if len(cellmates) > 1:
+            if self.wealth > 3:
+                altruism = random.randint(0,1)
+                if altruism == 0:
+                    pass
+                else:
+                    other = random.choice(cellmates)
+                    # If my neighbour's wealth is less than 40% of my wealth, I will donate an arbitrary sum of money to them
+                    if other.wealth < 0.4*self.wealth:
+                        max_donation = int(round(0.3*self.wealth)) 
+                        donation = random.randint(0, max_donation)
+                        other.wealth += donation
+                        self.wealth -= donation
+                        print("self wealth after donation = ", self.wealth)
+                        print("neighbour's wealth after donation = ", other.wealth)
+                        if other.wealth > self.wealth:
+                            print("FAIL")
+                    
+    def take_tax(self):
+        treasury = 0
+        if self.wealth > 8:
+            tax = math.floor(0.3*self.wealth)
+            treasury += tax
+            self.wealth -= tax
+            print("I HAVE BEEN TAXED UUGGGHHHHHHH, PAID", tax, "COINS!!!")
+            print("TREASURY NOW =", treasury)
+            
 
     def step(self):
         self.move()
         if self.wealth > 0:
-            self.give_money(3)
+            self.give_money(1)
+            self.donate_money()
+            self.take_tax()
+            #print("------------step------------")
+            
