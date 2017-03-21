@@ -1,6 +1,8 @@
 from mesa.visualization.modules import CanvasGrid
 from mesa.visualization.modules import ChartModule
 from mesa.visualization.ModularVisualization import ModularServer
+from mesa.visualization.TextVisualization import TextData
+from mesa.visualization.TextVisualization import TextVisualization
 
 from WealthModel import WealthModel
 
@@ -10,31 +12,31 @@ def agent_portrayal(agent):
                  "Filled": "true",
                  "r": 0.5}
 
-    if agent.wealth > 8:
-        portrayal["Color"] = "red"
+    if agent.wealth > 6:
+        portrayal["Color"] = "#5cd65c"
         portrayal["Layer"] = 0
         portrayal["r"] = 0.6
     elif agent.wealth > 4:
-        portrayal["Color"] = "blue"
+        portrayal["Color"] = "#e6ffb3"
         portrayal["Layer"] = 0
         portrayal["r"] = 0.4
     elif agent.wealth > 2:
-        portrayal["Color"] = "green"
+        portrayal["Color"] = "#ffff99"
         portrayal["Layer"] = 0
         portrayal["r"] = 0.3
     elif agent.wealth > 0:
-        portrayal["Color"] = "grey"
+        portrayal["Color"] = "#ffcc99"
         portrayal["Layer"] = 1
         portrayal["r"] = 0.2
     else:
-        portrayal["Color"] = "black"
+        portrayal["Color"] = "#ff884d"
         portrayal["Layer"] = 2
         portrayal["r"] = 0.1
     return portrayal
 
 grid = CanvasGrid(agent_portrayal, 10, 10, 500, 500)
 chart = ChartModule([
-    {"Label": "Gini", "Color": "Black"}],
+    {"Label": "Gini", "Color": "#6aa35e"}],
     data_collector_name='datacollector'
 )
 

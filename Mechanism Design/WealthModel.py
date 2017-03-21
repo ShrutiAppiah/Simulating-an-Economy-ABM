@@ -5,8 +5,8 @@ from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
-#from random import randint
 
+#Global variables
 treasury = 0
 
 def compute_gini(model):
@@ -19,7 +19,7 @@ def compute_gini(model):
 
 class WealthModel(Model):
     """A model with some number of agents."""
-
+    global treasury
     def __init__(self, N, width, height):
         self.num_agents = N
         self.running = True
@@ -52,7 +52,6 @@ class WealthModel(Model):
            
         
 class WealthAgent(Agent):
-    treasury = 0
     """ An agent with fixed initial wealth."""
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
@@ -66,6 +65,8 @@ class WealthAgent(Agent):
         new_position = random.choice(possible_steps)
         self.model.grid.move_agent(self, new_position)
 
+    ## Daily expenses
+    # At every step, the agent makes a transaction with one of their neighbors
     def give_money(self, coins):
         cellmates = self.model.grid.get_cell_list_contents([self.pos])
         if len(cellmates) > 1:
@@ -73,6 +74,9 @@ class WealthAgent(Agent):
             other.wealth += coins
             self.wealth -= coins
             
+    ## Altruism
+    # at every step, the agent makes a 50/50 choice of whether to donate money or not
+    # If the agent chooses to donate, they donate 
     def donate_money(self):
         cellmates = self.model.grid.get_cell_list_contents([self.pos])
         #print("self pos =", self.pos)
@@ -83,52 +87,63 @@ class WealthAgent(Agent):
                 if altruism == 0:
                     pass
                 else:
-                    other = random.choice(cellmates)
-                    # If my neighbour's wealth is less than 40% of my wealth, I will donate an arbitrary sum of money to them
-                    if other.wealth < 0.4*self.wealth:
-                        max_donation = int(round(0.3*self.wealth)) 
-                        donation = random.randint(0, max_donation)
-                        other.wealth += donation
-                        self.wealth -= donation
-                        print("self wealth after donation = ", self.wealth)
-                        print("neighbour's wealth after donation = ", other.wealth)
-                        if other.wealth > self.wealth:
-                            print("FAIL")
-                    
-    def take_tax(self):
+                    for i in cellmates:
+                        poor = random.choice(cellmates)
+                        # If my neighbour's wealth is less than 40% of my wealth, 
+                        # I will donate to them an arbitrary sum of money less than 30% of my wealth
+                        if poor.wealth < 0.4*self.wealth:
+                            print("Oh no, my neighbour is poor!", poor)
+                            max_donation = int(round(0.3*self.wealth)) 
+                            donation = random.randint(0, max_donation)
+                            poor.wealth += donation
+                            self.wealth -= donation
+                            print("My wealth after donation = ", self.wealth)
+                            print("Poor Neighbour's wealth after donation = ", poor.wealth)
+                            break
+                            if other.wealth > self.wealth:
+                                print("!!!!!!!!!!!!!!!!!!!!FAIL!!!!!!!!!!!!!!!!!!!!")
+                            
+                        
+    ## Taxes
+    # At every step, the agent's wealth is checked.
+    # If their wealth exceeds a certain amount, they are taxed 30% of their wealth.
+    # Upon paying tax, the agent is admitted to the Committee and can post a public project 
+    def collect_tax(self):
         global treasury
-        if self.wealth > 5:
+        if self.wealth > 9:
             tax = math.floor(0.3*self.wealth)
             treasury += tax
             self.wealth -= tax
             print("I, MEMBER", self.pos, "HAVE BEEN TAXED UUGGGHHHHHHH, PAID", tax, "COINS!!!")
             print("TREASURY NOW =", treasury)
         
-    #Reward agents        
+    ## Reward agents
+    # Agents who have participated in projects are rewarded with a bounty for completing the project
+    # Bounty coins are taken from the Treasury
     def project_reward(self, width, height):
         global treasury
         if treasury > 6:
             self.grid = MultiGrid(height, width, True)
             x = random.randint(0, self.grid.width-1)
             y = random.randint(0, self.grid.height-1) 
-            a = self.model.grid.is_cell_empty([x,y])
-            print("-------------------EMPTY = ", a)
-            #receiver = cell(x,y)
-            #receiver2 = __getitem__(x,y)
-            #print("I AM A RECIEVER1", receiver)
-            #print("I AM A RECIEVER2", receiver2)
-            if a == False:
-                receiver_position = (x,y)
-                print("RECEIVER POSITION = ", receiver_position)
-                receiver3 = self.model.grid.get_cell_list_contents(receiver_position)
-                print("I AM A RECIEVER3", receiver3)
+            print("------EMPTY------- = ", self.model.grid.is_cell_empty([x,y]))
+            
+            if self.model.grid.is_cell_empty([x,y]) == False:
+                position = (x,y)
+                print("RECEIVER POSITION = ", position)
+                potential_receivers = self.model.grid.get_cell_list_contents(position)
+                receiver = random.choice(potential_receivers)
+                print("BEFORE REWARD: I OWN THIS MUCH =", receiver.wealth)
+                receiver.wealth += 2
+                treasury -= 2
+                print("AFTER REWARD: I OWN THIS MUCH =", receiver.wealth)
 
     def step(self):
         self.move()
         if self.wealth > 0:
             self.give_money(1)
             self.donate_money()
-            self.take_tax()
+            self.collect_tax()
             
             self.project_reward(10,10)
             #print("------------step------------")
