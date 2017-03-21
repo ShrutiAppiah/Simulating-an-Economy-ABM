@@ -7,6 +7,7 @@ from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
 #from random import randint
 
+treasury = 0
 
 def compute_gini(model):
     agent_wealths = [agent.wealth for agent in model.schedule.agents]
@@ -36,7 +37,7 @@ class WealthModel(Model):
             x = random.randrange(self.grid.width)
             y = random.randrange(self.grid.height)
             self.grid.place_agent(a, (x, y))
-
+            
     def step(self):
         self.datacollector.collect(self)
         self.schedule.step()
@@ -51,10 +52,12 @@ class WealthModel(Model):
            
         
 class WealthAgent(Agent):
+    treasury = 0
     """ An agent with fixed initial wealth."""
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.wealth = 1
+        
 
     def move(self):
         possible_steps = self.model.grid.get_neighborhood(
@@ -72,6 +75,7 @@ class WealthAgent(Agent):
             
     def donate_money(self):
         cellmates = self.model.grid.get_cell_list_contents([self.pos])
+        #print("self pos =", self.pos)
         #print("cellmates = ", cellmates)
         if len(cellmates) > 1:
             if self.wealth > 3:
@@ -92,14 +96,32 @@ class WealthAgent(Agent):
                             print("FAIL")
                     
     def take_tax(self):
-        treasury = 0
-        if self.wealth > 8:
+        global treasury
+        if self.wealth > 5:
             tax = math.floor(0.3*self.wealth)
             treasury += tax
             self.wealth -= tax
-            print("I HAVE BEEN TAXED UUGGGHHHHHHH, PAID", tax, "COINS!!!")
+            print("I, MEMBER", self.pos, "HAVE BEEN TAXED UUGGGHHHHHHH, PAID", tax, "COINS!!!")
             print("TREASURY NOW =", treasury)
-            
+        
+    #Reward agents        
+    def project_reward(self, width, height):
+        global treasury
+        if treasury > 6:
+            self.grid = MultiGrid(height, width, True)
+            x = random.randint(0, self.grid.width-1)
+            y = random.randint(0, self.grid.height-1) 
+            a = self.model.grid.is_cell_empty([x,y])
+            print("-------------------EMPTY = ", a)
+            #receiver = cell(x,y)
+            #receiver2 = __getitem__(x,y)
+            #print("I AM A RECIEVER1", receiver)
+            #print("I AM A RECIEVER2", receiver2)
+            if a == False:
+                receiver_position = (x,y)
+                print("RECEIVER POSITION = ", receiver_position)
+                receiver3 = self.model.grid.get_cell_list_contents(receiver_position)
+                print("I AM A RECIEVER3", receiver3)
 
     def step(self):
         self.move()
@@ -107,5 +129,9 @@ class WealthAgent(Agent):
             self.give_money(1)
             self.donate_money()
             self.take_tax()
+            
+            self.project_reward(10,10)
             #print("------------step------------")
+            
+         
             
