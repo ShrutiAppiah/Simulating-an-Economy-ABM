@@ -8,6 +8,7 @@ from mesa.datacollection import DataCollector
 
 #Global variables
 treasury = 0
+economy_scale = 15
 
 def compute_gini(model):
     agent_wealths = [agent.wealth for agent in model.schedule.agents]
@@ -67,7 +68,7 @@ class WealthAgent(Agent):
 
     ## Daily expenses
     # At every step, the agent makes a transaction with one of their neighbors
-    def give_money(self, coins):
+    def daily_transactions(self, coins):
         cellmates = self.model.grid.get_cell_list_contents([self.pos])
         if len(cellmates) > 1:
             other = random.choice(cellmates)
@@ -75,20 +76,21 @@ class WealthAgent(Agent):
             self.wealth -= coins
             
     ## Altruism
-    # at every step, the agent makes a 50/50 choice of whether to donate money or not
+    # At every step, the agent makes a 50/50 choice of whether to donate money or not
     # If the agent chooses to donate, they donate 
     def donate_money(self):
-        cellmates = self.model.grid.get_cell_list_contents([self.pos])
+        neighbours = self.model.grid.get_cell_list_contents([self.pos])
         #print("self pos =", self.pos)
-        #print("cellmates = ", cellmates)
-        if len(cellmates) > 1:
+        print("cellmates = ", neighbours)
+        if len(neighbours) > 1:
             if self.wealth > 3:
                 altruism = random.randint(0,1)
                 if altruism == 0:
                     pass
                 else:
-                    for i in cellmates:
-                        poor = random.choice(cellmates)
+                    for i in neighbours:
+                        poor = random.choice(neighbours)
+                        print("POOR = ", poor)
                         # If my neighbour's wealth is less than 40% of my wealth, 
                         # I will donate to them an arbitrary sum of money less than 30% of my wealth
                         if poor.wealth < 0.4*self.wealth:
@@ -100,8 +102,6 @@ class WealthAgent(Agent):
                             print("My wealth after donation = ", self.wealth)
                             print("Poor Neighbour's wealth after donation = ", poor.wealth)
                             break
-                            if other.wealth > self.wealth:
-                                print("!!!!!!!!!!!!!!!!!!!!FAIL!!!!!!!!!!!!!!!!!!!!")
                             
                         
     ## Taxes
@@ -117,6 +117,7 @@ class WealthAgent(Agent):
             print("I, MEMBER", self.pos, "HAVE BEEN TAXED UUGGGHHHHHHH, PAID", tax, "COINS!!!")
             print("TREASURY NOW =", treasury)
         
+   
     ## Reward agents
     # Agents who have participated in projects are rewarded with a bounty for completing the project
     # Bounty coins are taken from the Treasury
@@ -141,11 +142,11 @@ class WealthAgent(Agent):
     def step(self):
         self.move()
         if self.wealth > 0:
-            self.give_money(1)
+            self.daily_transactions(1)
             self.donate_money()
             self.collect_tax()
             
-            self.project_reward(10,10)
+            self.project_reward(economy_scale,economy_scale)
             #print("------------step------------")
             
          
