@@ -79,9 +79,9 @@ class WealthAgent(Agent):
     # At every step, the agent makes a 50/50 choice of whether to donate money or not
     # If the agent chooses to donate, they donate 
     def donate_money(self):
-        neighbours = self.model.grid.get_cell_list_contents([self.pos])
+        neighbours = self.model.grid.get_neighborhood(self.pos, moore=True, include_center=False)
         #print("self pos =", self.pos)
-        print("cellmates = ", neighbours)
+        #print("cellmates = ", neighbours)
         if len(neighbours) > 1:
             if self.wealth > 3:
                 altruism = random.randint(0,1)
@@ -89,19 +89,25 @@ class WealthAgent(Agent):
                     pass
                 else:
                     for i in neighbours:
-                        poor = random.choice(neighbours)
-                        print("POOR = ", poor)
-                        # If my neighbour's wealth is less than 40% of my wealth, 
-                        # I will donate to them an arbitrary sum of money less than 30% of my wealth
-                        if poor.wealth < 0.4*self.wealth:
-                            print("Oh no, my neighbour is poor!", poor)
-                            max_donation = int(round(0.3*self.wealth)) 
-                            donation = random.randint(0, max_donation)
-                            poor.wealth += donation
-                            self.wealth -= donation
-                            print("My wealth after donation = ", self.wealth)
-                            print("Poor Neighbour's wealth after donation = ", poor.wealth)
-                            break
+                        poor_cell_choice = random.choice(neighbours)
+                        print("POOR CELL CHOICE = ", poor_cell_choice)
+                        poor_cell_contents = self.model.grid.get_cell_list_contents([poor_cell_choice])
+                        if len(poor_cell_contents) != 0:
+                            print("POOR CELL CONTENTS= ", poor_cell_contents)
+                            poor = random.choice(poor_cell_contents)
+                            print("SELF = ", self)
+                            print("POOR = ", poor)
+                            # If my neighbour's wealth is less than 40% of my wealth, 
+                            # I will donate to them an arbitrary sum of money less than 30% of my wealth
+                            if poor.wealth < 0.4*self.wealth:
+                                print("Oh no, my neighbour is poor!", poor)
+                                max_donation = int(round(0.3*self.wealth)) 
+                                donation = random.randint(0, max_donation)
+                                poor.wealth += donation
+                                self.wealth -= donation
+                                print("My wealth after donation = ", self.wealth)
+                                print("Poor Neighbour's wealth after donation = ", poor.wealth)
+                                break
                             
                         
     ## Taxes
