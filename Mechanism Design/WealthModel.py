@@ -105,10 +105,9 @@ class WealthAgent(Agent):
                                 poor.wealth += donation
                                 self.wealth -= donation
                                 #print("My wealth after donation = ", self.wealth)
-                                #print("Poor Neighbour's wealth after donation = ", poor.wealth)
+                                #print("Poor Neighbour's wealth after donation = ", poor.wealth)                            
                                 break
-                                if i > 1:
-                                     break
+                                
                 else:
                     pass
                         
