@@ -9,6 +9,7 @@ from mesa.datacollection import DataCollector
 #Global variables
 treasury = 0
 economy_scale = 15
+project_participation = 0
 
 def compute_gini(model):
     agent_wealths = [agent.wealth for agent in model.schedule.agents]
@@ -81,34 +82,35 @@ class WealthAgent(Agent):
     def donate_money(self):
         neighbours = self.model.grid.get_neighborhood(self.pos, moore=True, include_center=False)
         #print("self pos =", self.pos)
-        #print("cellmates = ", neighbours)
+        #print("I HAVE THIS MANY NEIGHBOURS", len(neighbours))
         if len(neighbours) > 1:
             if self.wealth > 3:
                 altruism = random.randint(0,1)
-                if altruism == 0:
-                    pass
-                else:
-                    for i in neighbours:
+                if altruism != 0:
+                     for i in neighbours:
                         poor_cell_choice = random.choice(neighbours)
-                        print("POOR CELL CHOICE = ", poor_cell_choice)
+                        #print("POOR CELL CHOICE = ", poor_cell_choice)
                         poor_cell_contents = self.model.grid.get_cell_list_contents([poor_cell_choice])
                         if len(poor_cell_contents) != 0:
-                            print("POOR CELL CONTENTS= ", poor_cell_contents)
+                            #print("POOR CELL CONTENTS= ", poor_cell_contents)
                             poor = random.choice(poor_cell_contents)
-                            print("SELF = ", self)
-                            print("POOR = ", poor)
+                            #print("SELF = ", self)
+                            #print("POOR = ", poor)
                             # If my neighbour's wealth is less than 40% of my wealth, 
                             # I will donate to them an arbitrary sum of money less than 30% of my wealth
-                            if poor.wealth < 0.4*self.wealth:
+                            if poor.wealth < 0.2*self.wealth:
                                 print("Oh no, my neighbour is poor!", poor)
                                 max_donation = int(round(0.3*self.wealth)) 
                                 donation = random.randint(0, max_donation)
                                 poor.wealth += donation
                                 self.wealth -= donation
-                                print("My wealth after donation = ", self.wealth)
-                                print("Poor Neighbour's wealth after donation = ", poor.wealth)
+                                #print("My wealth after donation = ", self.wealth)
+                                #print("Poor Neighbour's wealth after donation = ", poor.wealth)
                                 break
-                            
+                                if i > 1:
+                                     break
+                else:
+                    pass
                         
     ## Taxes
     # At every step, the agent's wealth is checked.
@@ -116,7 +118,7 @@ class WealthAgent(Agent):
     # Upon paying tax, the agent is admitted to the Committee and can post a public project 
     def collect_tax(self):
         global treasury
-        if self.wealth > 9:
+        if self.wealth > 6:
             tax = math.floor(0.3*self.wealth)
             treasury += tax
             self.wealth -= tax
@@ -129,21 +131,23 @@ class WealthAgent(Agent):
     # Bounty coins are taken from the Treasury
     def project_reward(self, width, height):
         global treasury
+        global project_participation
         if treasury > 6:
             self.grid = MultiGrid(height, width, True)
             x = random.randint(0, self.grid.width-1)
             y = random.randint(0, self.grid.height-1) 
-            print("------EMPTY------- = ", self.model.grid.is_cell_empty([x,y]))
+            #print("------EMPTY------- = ", self.model.grid.is_cell_empty([x,y]))
             
             if self.model.grid.is_cell_empty([x,y]) == False:
                 position = (x,y)
                 print("RECEIVER POSITION = ", position)
                 potential_receivers = self.model.grid.get_cell_list_contents(position)
                 receiver = random.choice(potential_receivers)
-                print("BEFORE REWARD: I OWN THIS MUCH =", receiver.wealth)
                 receiver.wealth += 2
                 treasury -= 2
+                project_participation += 1
                 print("AFTER REWARD: I OWN THIS MUCH =", receiver.wealth)
+                print("TOTAL PARTICIPANTS = ", project_participation)
 
     def step(self):
         self.move()

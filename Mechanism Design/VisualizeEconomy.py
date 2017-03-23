@@ -1,8 +1,9 @@
 from mesa.visualization.modules import CanvasGrid
 from mesa.visualization.modules import ChartModule
+#from mesa.visualization.modules import TextElement
 from mesa.visualization.ModularVisualization import ModularServer
-from mesa.visualization.TextVisualization import TextData
-from mesa.visualization.TextVisualization import TextVisualization
+#from mesa.visualization.TextVisualization import TextData
+#from mesa.visualization.TextVisualization import TextVisualization
 
 from WealthModel import WealthModel
 
@@ -52,8 +53,10 @@ def agent_portrayal(agent):
 grid = CanvasGrid(agent_portrayal, economy_scale, economy_scale, 650, 650)
 chart = ChartModule([
     {"Label": "Gini", "Color": "#6aa35e"}],
-    data_collector_name='datacollector'
+    data_collector_name='datacollector',
+    canvas_height=600, canvas_width=550
 )
+#text = TextElement(js_code="document.write(5 + 6);")
 
 server = ModularServer(WealthModel, [grid, chart], "Wealth Model", economy_scale*economy_scale, economy_scale, economy_scale)
 server.port = 8521
