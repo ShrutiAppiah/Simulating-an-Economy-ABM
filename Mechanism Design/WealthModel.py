@@ -1,5 +1,6 @@
 import random
 import math
+import mesa
 
 from mesa import Agent, Model
 from mesa.time import RandomActivation
@@ -39,7 +40,7 @@ class WealthModel(Model):
             x = random.randrange(self.grid.width)
             y = random.randrange(self.grid.height)
             self.grid.place_agent(a, (x, y))
-            
+
     def step(self):
         self.datacollector.collect(self)
         self.schedule.step()
@@ -51,14 +52,24 @@ class WealthModel(Model):
             """tax_period = step()%10
             if tax_period == 0
                 return_tax(self, treasury)"""
-           
-        
+
+
 class WealthAgent(Agent):
     """ An agent with fixed initial wealth."""
+
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.wealth = 1
-        
+        #print("random.choice(self.pos)", self.model.grid.get_cell_list_contents([self.pos]))
+        x = random.randint(0, self.model.grid.width-1)
+        y = random.randint(0, self.model.grid.height-1)
+        print("X Y", x, "and", y)
+        if self.model.grid.is_cell_empty([x,y]) == False:
+            rich_pos = (x,y)
+            rich_receivers = self.model.grid.get_cell_list_contents(rich_pos)
+            rich = random.choice(rich_receivers)
+            rich.wealth += 4
+
 
     def move(self):
         possible_steps = self.model.grid.get_neighborhood(
@@ -75,10 +86,10 @@ class WealthAgent(Agent):
             other = random.choice(cellmates)
             other.wealth += coins
             self.wealth -= coins
-            
+
     ## Altruism
     # At every step, the agent makes a 50/50 choice of whether to donate money or not
-    # If the agent chooses to donate, they donate 
+    # If the agent chooses to donate, they donate
     def donate_money(self):
         neighbours = self.model.grid.get_neighborhood(self.pos, moore=True, include_center=False)
         #print("self pos =", self.pos)
@@ -96,35 +107,35 @@ class WealthAgent(Agent):
                             poor = random.choice(poor_cell_contents)
                             #print("SELF = ", self)
                             #print("POOR = ", poor)
-                            # If my neighbour's wealth is less than 40% of my wealth, 
+                            # If my neighbour's wealth is less than 40% of my wealth,
                             # I will donate to them an arbitrary sum of money less than 30% of my wealth
                             if poor.wealth < 0.2*self.wealth:
                                 print("Oh no, my neighbour is poor!", poor)
-                                max_donation = int(round(0.3*self.wealth)) 
+                                max_donation = int(round(0.3*self.wealth))
                                 donation = random.randint(0, max_donation)
                                 poor.wealth += donation
                                 self.wealth -= donation
                                 #print("My wealth after donation = ", self.wealth)
-                                #print("Poor Neighbour's wealth after donation = ", poor.wealth)                            
+                                #print("Poor Neighbour's wealth after donation = ", poor.wealth)
                                 break
-                                
+
                 else:
                     pass
-                        
+
     ## Taxes
     # At every step, the agent's wealth is checked.
     # If their wealth exceeds a certain amount, they are taxed 30% of their wealth.
-    # Upon paying tax, the agent is admitted to the Committee and can post a public project 
+    # Upon paying tax, the agent is admitted to the Committee and can post a public project
     def collect_tax(self):
         global treasury
-        if self.wealth > 6:
+        if self.wealth > 7:
             tax = math.floor(0.3*self.wealth)
             treasury += tax
             self.wealth -= tax
             print("I, MEMBER", self.pos, "HAVE BEEN TAXED UUGGGHHHHHHH, PAID", tax, "COINS!!!")
             print("TREASURY NOW =", treasury)
-        
-   
+
+
     ## Reward agents
     # Agents who have participated in projects are rewarded with a bounty for completing the project
     # Bounty coins are taken from the Treasury
@@ -134,9 +145,9 @@ class WealthAgent(Agent):
         if treasury > 6:
             self.grid = MultiGrid(height, width, True)
             x = random.randint(0, self.grid.width-1)
-            y = random.randint(0, self.grid.height-1) 
+            y = random.randint(0, self.grid.height-1)
             #print("------EMPTY------- = ", self.model.grid.is_cell_empty([x,y]))
-            
+
             if self.model.grid.is_cell_empty([x,y]) == False:
                 position = (x,y)
                 print("RECEIVER POSITION = ", position)
@@ -149,14 +160,10 @@ class WealthAgent(Agent):
                 print("TOTAL PARTICIPANTS = ", project_participation)
 
     def step(self):
-        self.move()
+        #self.move()
         if self.wealth > 0:
             self.daily_transactions(1)
-            self.donate_money()
-            self.collect_tax()
-            
+            #self.donate_money()
+            #self.collect_tax()
             self.project_reward(economy_scale,economy_scale)
             #print("------------step------------")
-            
-         
-            
