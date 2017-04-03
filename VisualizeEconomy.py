@@ -9,7 +9,7 @@ from mesa.visualization.ModularVisualization import ModularServer
 
 from WealthModel import WealthModel
 
-economy_scale = 20
+economy_scale = 10
 def agent_portrayal(agent):
     portrayal = {"Shape": "circle",
                  "Filled": "true",
