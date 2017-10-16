@@ -96,7 +96,7 @@ class WealthAgent(Agent):
         #print("self pos =", self.pos)
         #print("I HAVE THIS MANY NEIGHBOURS", len(neighbours))
         if len(neighbours) > 1:
-            altruism_c = 3
+            altruism_c = 2
             if self.wealth > altruism_c:
                 altruism = random.randint(0,1)
                 if altruism != 0:
@@ -135,7 +135,7 @@ class WealthAgent(Agent):
             tax = math.floor(0.3*self.wealth)
             treasury += tax
             self.wealth -= tax
-            print("I, MEMBER", self.pos, "HAVE BEEN TAXED UUGGGHHHHHHH, PAID", tax, "COINS!!!")
+            print("I, member", self.pos, "have been taxed , paid", tax, "COINS!!!")
             print("TREASURY NOW =", treasury)
 
 
