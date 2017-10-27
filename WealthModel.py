@@ -94,7 +94,6 @@ class WealthAgent(Agent):
     def donate_money(self):
         neighbours = self.model.grid.get_neighborhood(self.pos, moore=True, include_center=False)
         #print("self pos =", self.pos)
-        #print("I HAVE THIS MANY NEIGHBOURS", len(neighbours))
         if len(neighbours) > 1:
             altruism_c = 2
             if self.wealth > altruism_c:
@@ -117,8 +116,7 @@ class WealthAgent(Agent):
                                 donation = random.randint(0, max_donation)
                                 poor.wealth += donation
                                 self.wealth -= donation
-                                #print("My wealth after donation = ", self.wealth)
-                                #print("Poor Neighbour's wealth after donation = ", poor.wealth)
+                                #print("My wealth after donation = ", self.wealth
                                 break
 
                 else:
@@ -135,8 +133,8 @@ class WealthAgent(Agent):
             tax = math.floor(0.3*self.wealth)
             treasury += tax
             self.wealth -= tax
-            print("I, member", self.pos, "have been taxed , paid", tax, "COINS!!!")
-            print("TREASURY NOW =", treasury)
+            print("I, member", self.pos, "have been taxed , paid", tax, "coin")
+            print("TREASURY =", treasury)
 
 
     ## Reward agents
@@ -150,7 +148,7 @@ class WealthAgent(Agent):
             self.grid = MultiGrid(height, width, True)
             x = random.randint(0, self.grid.width-1)
             y = random.randint(0, self.grid.height-1)
-            #print("------EMPTY------- = ", self.model.grid.is_cell_empty([x,y]))
+            #print("EMPTY = ", self.model.grid.is_cell_empty([x,y]))
 
             if self.model.grid.is_cell_empty([x,y]) == False:
                 position = (x,y)
@@ -167,9 +165,9 @@ class WealthAgent(Agent):
     def step(self):
         #self.move()
         if self.wealth > 0:
-            expenditure_c = 1
+            expenditure_c = 10
             self.daily_transactions(expenditure_c)
-            #self.donate_money()
+            self.donate_money()
             self.collect_tax()
             self.project_reward(economy_scale,economy_scale)
             #print("------------step------------")
