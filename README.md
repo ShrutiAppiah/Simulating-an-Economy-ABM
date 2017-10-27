@@ -1,5 +1,13 @@
 # Simulating an Organizational Economy
 
+Research 
+------------
+This is a simulator for token mechanisms in decentralized organizations. Use this to simulate your own token-based societies!
+
+Built out of a project for scientifically evaluating an organizational incentive schemes, this simulation demonstrates the behaviour of a decentralized autonmous economy over time. The system is akin to those occuring in statistical mechanics and is mathematically modelled as a discrete-time Markov chain. 
+
+[I'm an inline-style link with title](https://www.google.com "Read my paper on ResearchGate")
+
 Python
 ------------
 Make sure you have Python 3
