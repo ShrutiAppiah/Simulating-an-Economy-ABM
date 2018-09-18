@@ -2,7 +2,7 @@
 
 Research
 ------------
-This is a simulator for token mechanisms in decentralized organizations. Use this to simulate your own token-based societies!
+This is a multi-agent simulator for token mechanisms in decentralized organizations. Use this to simulate your own token-based societies!
 
 Built out of a project for scientifically evaluating an organizational incentive schemes, this simulation demonstrates the behaviour of a decentralized autonmous economy over time. The system is akin to those occuring in statistical mechanics and is modelled as a discrete-time Markov chain. 
 
