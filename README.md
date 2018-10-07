@@ -38,7 +38,7 @@ If you want to follow the workshop, see Token Engineering. If you want to skip a
 ## Token Engineering 
 In the token enginerring design process, you will define your token economy as an optimization problem, mathematically model it, and then validate it using this multi-agent simulation.
 
-### Objective :rocket:
+### :rocket: Objective :rocket:
 Define the goal of your token economy. Think long-term.
 
 A simple token economy aims to either maximize or minimize one parameter or function. The objective funtion is also known as the fitness function or utility function. 
@@ -47,13 +47,13 @@ A simple token economy aims to either maximize or minimize one parameter or func
 So, I could define my objective function as:
 Maximize f(x) = Total number of human agents participating in a project in each iteration  
 
-### Domain
-### System agents/players
-### System clock
-### Assumptions
-### Constraints 
-### Input parameters
-### Starting mechanism
+### :earth-asia: Domain :earth-asia:
+### :couple: System agents/players :couple:
+### :clock2: System clock :clock2:
+### :ok_hand: Assumptions :ok_hand:
+### :anchor: Constraints :anchor:
+### :arrow_right: Input parameters :arrow_right:
+### :beginner: Starting mechanism :beginner:
 
 ## Run
 Navigate into the cloned repo folder 
@@ -67,6 +67,8 @@ $ python3 VisualizeEconomy.py
 
 ### View
 The server should host it on http://127.0.0.1:8521/
+
+:checkered_flag:
 
 ### Support
 Star this repo if you found this model useful. Reach out to me if you'd like to collaborate.
