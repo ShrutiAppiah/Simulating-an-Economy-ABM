@@ -38,22 +38,50 @@ If you want to follow the workshop, see Token Engineering. If you want to skip a
 ## Token Engineering 
 In the token enginerring design process, you will define your token economy as an optimization problem, mathematically model it, and then validate it using this multi-agent simulation.
 
-### :rocket: Objective :rocket:
+#### :rocket: Objective :rocket:
 Define the goal of your token economy. Think long-term.
 
 A simple token economy aims to either maximize or minimize one parameter or function. The objective funtion is also known as the fitness function or utility function. 
 
 <i> In this example, </i> I want my token to incentivize human agents to contribute in projects. 
 So, I could define my objective function as:
-Maximize f(x) = Total number of human agents participating in a project in each iteration  
 
-### :globe_with_meridians: Domain :globe_with_meridians:
-### :couple: System agents/players :couple:
-### :clock2: System clock :clock2:
-### :ok_hand: Assumptions :ok_hand:
-### :anchor: Constraints :anchor:
-### :arrow_right: Input parameters :arrow_right:
-### :beginner: Starting mechanism :beginner:
+>  <b> Maximize </b> f(x) = Total number of human agents participating in a project in each iteration  
+
+#### :globe_with_meridians: Domain :globe_with_meridians:
+
+<i> In this example, </i> the domain is a single organization/company with a fixed number of agents.
+
+> <b> Domain: </b> A single DAO with 10x10 participants
+
+#### :couple: System agents/players :couple:
+The agents of the system constitute of all the parties that can transact with one another. 
+
+<i> In this example, </i> the agents of this economy are members of the DAO.
+
+> <b> Agents: </b> Members of the DAO
+
+The agents certainly have some properties associated with them. At this point, you may have uncovered some of them. 
+
+<i> In this example, </i> the agents have the following known properties -
+
+> <b> Properties: </b>
+> <br> Altruistic
+> <br> Fair 
+> <br> Truthful
+> <br> Rational
+
+#### :clock2: System clock :clock2:
+The clock is defined as the smallest period in which the objective function/parameter changes.  The period should be repeatable.
+
+<i> In this example, </i> the period is the granular unit in which a full project cycle can be completed i.e. the project can be posted, agents can opt in to it, complete it, and get rewarded. 
+
+#### :ok_hand: Assumptions :ok_hand:
+There are always some unknowns in any system. Although not measured or verified, we may have a rough idea of what these unknowns could be. These will be defined as assumptions. 
+
+#### :anchor: Constraints :anchor:
+#### :arrow_right: Input parameters :arrow_right:
+#### :beginner: Starting mechanism :beginner:
 
 ## Run
 Navigate into the cloned repo folder 
@@ -68,7 +96,7 @@ $ python3 VisualizeEconomy.py
 ### View
 The server should host it on http://127.0.0.1:8521/
 
-:checkered_flag:
+:checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: 
 
 ### Support
 Star this repo if you found this model useful. Reach out to me if you'd like to collaborate.
