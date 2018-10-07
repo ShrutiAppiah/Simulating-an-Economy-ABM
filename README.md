@@ -47,7 +47,7 @@ A simple token economy aims to either maximize or minimize one parameter or func
 So, I could define my objective function as:
 Maximize f(x) = Total number of human agents participating in a project in each iteration  
 
-### :earth: Domain :earth:
+### :globe_with_meridians: Domain :globe_with_meridians:
 ### :couple: System agents/players :couple:
 ### :clock2: System clock :clock2:
 ### :ok_hand: Assumptions :ok_hand:
