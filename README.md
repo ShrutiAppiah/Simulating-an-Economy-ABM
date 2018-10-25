@@ -83,12 +83,47 @@ The clock is defined as the smallest period in which the objective function/para
 ----
 There are always some unknowns in any system. Although not measured or verified, we may have a rough idea of what these unknowns could be. These will be defined as assumptions. 
 
+<i> In this example, </i> we make the following assumptions -
+> Quality of all the projects completed are similar
+> <br> Agents aren't able to evaluate difficulty of projects
+> <br> All token transactions are tracked
+
+
 #### :anchor: Constraints :anchor:
 ----
+Constraints bound the system. An optimally constrained system is easy to find solutions for. 
+
+<b> System constraints </b>
+- Bounded rationality of agents
+
+<b> Technical constraints </b>
+- Scalability
+- Gas price
+
 #### :arrow_right: Input parameters :arrow_right:
 ----
+Can be obtained from prior statistical studies
+- User or design research
+- Behavioural economics
+- Surveys
+
+<i> In this example, </i> one of the input parameters are the altruism coefficients.
+
 #### :beginner: Starting mechanism :beginner:
 ----
+
+In most cases, you may be able to define some of these in your starting mechanism -
+- Incentives/tokens
+- Token supply
+- Is there a cap?
+- Value 
+-- Is the value pegged to fiat or a stablecoin?
+- Mobility
+- Tradability
+-- What can the token be exchanged for?
+- Any identified equilibria
+
+This example started with the mechanism of a simple <i> Boltzmann Wealth Model. </i> 
 
 ## Run
 Navigate into the cloned repo folder 
