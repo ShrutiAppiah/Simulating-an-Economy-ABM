@@ -154,7 +154,7 @@ class WealthAgent(Agent):
                 receiver.wealth += reward_c
                 treasury -= reward_c
                 project_participation += 1
-                #print("AFTER REWARD: I OWN THIS MUCH =", receiver.wealth)
+                #print("After reward, I own this much =", receiver.wealth)
                 print("TOTAL PARTICIPANTS = ", project_participation)
 
     def step(self):
