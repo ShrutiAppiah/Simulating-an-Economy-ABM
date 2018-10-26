@@ -60,7 +60,6 @@ class WealthAgent(Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.wealth = 1
-        #print("random.choice(self.pos)", self.model.grid.get_cell_list_contents([self.pos]))
         x = random.randint(0, self.model.grid.width-1)
         y = random.randint(0, self.model.grid.height-1)
         print("X Y", x, "and", y)
@@ -68,7 +67,7 @@ class WealthAgent(Agent):
             rich_pos = (x,y)
             rich_receivers = self.model.grid.get_cell_list_contents(rich_pos)
             rich = random.choice(rich_receivers)
-            inequality_c =4
+            inequality_c = 4
             rich.wealth += inequality_c
 
 
@@ -93,7 +92,6 @@ class WealthAgent(Agent):
     # If the agent chooses to donate, they donate
     def donate_money(self):
         neighbours = self.model.grid.get_neighborhood(self.pos, moore=True, include_center=False)
-        #print("self pos =", self.pos)
         if len(neighbours) > 1:
             altruism_c = 2
             if self.wealth > altruism_c:
@@ -104,10 +102,8 @@ class WealthAgent(Agent):
                         #print("POOR CELL CHOICE = ", poor_cell_choice)
                         poor_cell_contents = self.model.grid.get_cell_list_contents([poor_cell_choice])
                         if len(poor_cell_contents) != 0:
-                            #print("POOR CELL CONTENTS= ", poor_cell_contents)
                             poor = random.choice(poor_cell_contents)
-                            #print("SELF = ", self)
-                            #print("POOR = ", poor)
+
                             # If my neighbour's wealth is less than x% of my wealth,
                             # I will donate to them an arbitrary sum of money less than 30% of my wealth
                             if poor.wealth < 0.2*self.wealth:
@@ -146,13 +142,12 @@ class WealthAgent(Agent):
         treasury_c = 6
         if treasury > treasury_c:
             self.grid = MultiGrid(height, width, True)
-            x = random.randint(0, self.grid.width-1)
-            y = random.randint(0, self.grid.height-1)
+            x = random.randint(0, self.grid.width)
+            y = random.randint(0, self.grid.height)
             #print("EMPTY = ", self.model.grid.is_cell_empty([x,y]))
 
             if self.model.grid.is_cell_empty([x,y]) == False:
                 position = (x,y)
-                #print("RECEIVER POSITION = ", position)
                 potential_receivers = self.model.grid.get_cell_list_contents(position)
                 receiver = random.choice(potential_receivers)
                 reward_c = 2
@@ -165,7 +160,7 @@ class WealthAgent(Agent):
     def step(self):
         #self.move()
         if self.wealth > 0:
-            expenditure_c = 10
+            expenditure_c = 5
             self.daily_transactions(expenditure_c)
             self.donate_money()
             self.collect_tax()
