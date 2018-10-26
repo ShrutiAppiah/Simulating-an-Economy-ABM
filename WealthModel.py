@@ -62,7 +62,7 @@ class WealthAgent(Agent):
         self.wealth = 1
         x = random.randint(0, self.model.grid.width-1)
         y = random.randint(0, self.model.grid.height-1)
-        print("X Y", x, "and", y)
+        #print("X Y", x, "and", y)
         if self.model.grid.is_cell_empty([x,y]) == False:
             rich_pos = (x,y)
             rich_receivers = self.model.grid.get_cell_list_contents(rich_pos)
