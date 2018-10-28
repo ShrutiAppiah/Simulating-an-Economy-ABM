@@ -135,6 +135,13 @@ And run
 $ python3 VisualizeEconomy.py
 ```
 
+## Docker
+
+```
+docker build -t simulating-an-economy-abm .
+docker run -it -p 8521:8521 -v `pwd`:/usr/local/models simulating-an-economy-abm
+```
+
 ### View
 The server should host it on http://127.0.0.1:8521/
 
