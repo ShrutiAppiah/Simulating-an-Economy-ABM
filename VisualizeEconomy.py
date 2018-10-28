@@ -120,6 +120,6 @@ chart = ChartModule([
 )
 #text = TextElement(js_code="document.write(5 + 6);")
 
-server = ModularServer(WealthModel, [grid, chart], "Wealth Model", economy_scale*economy_scale, economy_scale, economy_scale)
+server = ModularServer(WealthModel, [grid, chart], "Wealth Model", { "N" : economy_scale*economy_scale, "width" : economy_scale, "height" : economy_scale} )
 server.port = 8521
 server.launch()
