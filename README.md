@@ -148,7 +148,7 @@ The server should host it on http://127.0.0.1:8521/
 :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: :checkered_flag: 
 
 ## Support
-Join TokenWork on <b> [Telegram](https://t.me/joinchat/Hwj46xFpeQdiPXvUUfG7Dw) </b>
+Join TokenWork on <b> [Telegram](https://t.me/joinchat/Hwj46xFpeQc_s1PYSQpwJw) </b>
 Read my paper on [Decentralized Organizations as Multi-Agent Systems](https://www.researchgate.net/publication/319875145_Decentralized_Organizations_as_Multi-Agent_Systems_-_A_Complex_Systems_Perspective "Decentralized Organizations as Multi-Agent Systems") (Mar 2017)
 <br> Star this repo if you found this model useful. Reach out to me if you'd like to collaborate.
 
