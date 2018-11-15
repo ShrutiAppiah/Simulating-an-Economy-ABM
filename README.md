@@ -40,9 +40,9 @@ In the token enginerring design process, you will define your token economy as a
 
 #### :rocket: Objective :rocket:
 ----
-Define the goal of your token economy. Think long-term.
+A simple token economy aims to either maximize or minimize one parameter or function. The objective function is also known as the fitness function or utility function. 
 
-A simple token economy aims to either maximize or minimize one parameter or function. The objective funtion is also known as the fitness function or utility function. 
+Define the goal of your token economy. Think long-term.
 
 <i> In this example, </i> I want my token to incentivize human agents to contribute in projects. 
 So, I could define my objective function as:
