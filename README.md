@@ -15,11 +15,6 @@ Ahoj Ethereum developers!
 ### Python
 Make sure you have Python 3. You can download the latest version here - https://www.python.org/
 
-### Install Mesa
-Install Mesa on Python 3:
-
-    $ pip3 install mesa
-
 ### Dependencies
 Install all dependencies either manually or by using
 ```
