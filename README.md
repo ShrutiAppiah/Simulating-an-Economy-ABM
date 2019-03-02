@@ -36,7 +36,7 @@ On Terminal or Command Prompt, cd into the main directory for this repository.
 If you want to follow the workshop, see Token Engineering. If you want to skip ahead and run the code, go to Run/
 
 ## Token Engineering 
-In the token enginerring design process, you will define your token economy as an optimization problem, mathematically model it, and then validate it using this multi-agent simulation.
+In the token engineering design process, you will define your token economy as an optimization problem, mathematically model it, and then validate it using this multi-agent simulation.
 
 #### :rocket: Objective :rocket:
 ----
