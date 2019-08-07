@@ -150,5 +150,6 @@ Read my paper on [Decentralized Organizations as Multi-Agent Systems](https://ww
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Copyright (c) 2017 Shruti Appiah
+
+Copyright (c) `2017` `Shruti Appiah`
 
