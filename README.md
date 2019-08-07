@@ -148,7 +148,7 @@ Read my paper on [Decentralized Organizations as Multi-Agent Systems](https://ww
 <br> Star this repo if you found this model useful. Reach out to me if you'd like to collaborate.
 
 ## License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Copyright (c) 2017 Shruti Appiah
-<p>
-<span class="CommunityTemplate-highlight js-template-highlight" data-fieldname="fullname">Shruti Appiah</span>
-</p>
+
