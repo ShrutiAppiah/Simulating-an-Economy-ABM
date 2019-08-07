@@ -147,3 +147,8 @@ Join TokenWork on <b> [Telegram](https://t.me/joinchat/Hwj46xFpeQc_s1PYSQpwJw) <
 Read my paper on [Decentralized Organizations as Multi-Agent Systems](https://www.researchgate.net/publication/319875145_Decentralized_Organizations_as_Multi-Agent_Systems_-_A_Complex_Systems_Perspective "Decentralized Organizations as Multi-Agent Systems") (Mar 2017)
 <br> Star this repo if you found this model useful. Reach out to me if you'd like to collaborate.
 
+## License
+Copyright (c) 2017 Shruti Appiah
+<p>
+<span class="CommunityTemplate-highlight js-template-highlight" data-fieldname="fullname">Shruti Appiah</span>
+</p>
